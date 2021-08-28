@@ -1,6 +1,8 @@
+using InsuranceAppWebApi.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +28,9 @@ namespace InsuranceAppWebApiAPI
         {
 
             services.AddControllers();
+            services.AddDbContext<InsuranceContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("InsuranceWebApiConnection"))
+            .EnableSensitiveDataLogging()
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
